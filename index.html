@@ -18,18 +18,28 @@
 
     <script src="/socket.io/socket.io.js"></script>
 </head>
-<body class="clearfix" id="ng-app" ng-app="factors">
+<body class="clearfix">
     Hello world
+<form action="javascript:void(0)">
+<input type="text" id="message">
+<input type="submit">
+</form>
+<ul>
 
-
+</ul>
     <script>
         var socket = io();
 
         // On the client side, emit and recieve messages
 
         // On the server emit and receive a message
-
-
+        document.forms[0].onsubmit=function(){
+        	console.log('d')
+        	socket.emit('message',document.getElementById('message').value)
+        }
+        socket.on('message',function(message){
+        	document.getElementsByTagName('ul')[0].innerHTML+='<li>'+message+'</li>';
+        })
     </script>
 </body>
 </html>
