@@ -30,10 +30,10 @@
     <li class="clearButton"><a href="#clear">Clear</a></li>
   </ul>
   <div class="sig sigWrapper">
-    <canvas class="pad" width="198" height="55"></canvas>
+    <canvas class="pad" width="500" height="500"></canvas>
     <input type="hidden" name="output" class="output">
   </div>
-  <button type="submit">I accept the terms of this agreement.</button>
+  <button type="submit">Send Drawing</button>
 </form>
 <ul>
 
@@ -58,7 +58,7 @@
         	$('.sigPad').signaturePad().regenerate(imageStr);
         });
         $(document).ready(function () {
-		  $('.sigPad').signaturePad({drawOnly:true});
+		  $('.sigPad').signaturePad({drawOnly:true,lineWidth:0});
 		});
     </script>
 </body>
