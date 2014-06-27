@@ -10,7 +10,7 @@ var server = http.createServer(app).listen(8000, function(){
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket){
-    socket.on('message',function(data){
-    	io.sockets.emit('message',data);
+    socket.on('image',function(img){
+    	io.sockets.emit('image',img);
     });
 });

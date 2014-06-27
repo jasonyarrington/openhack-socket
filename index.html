@@ -9,20 +9,31 @@
 	<title>Open Hack Socket IO</title>
 	<link href='http://www.google.com/fonts#UsePlace:use/Collection:Open+Sans:700,400' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="css/style.css">
-	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+	<!--<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-resource.min.js"></script>
 	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-animate.js"></script>
 	<!--All.js is the compiled and compressed version of the scripts listed in Gruntfile.js!-->
 	<!--<script src="js/all.js"></script>-->
-
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="sigpad/jquery.signaturepad.min.js"></script>
 </head>
 <body class="clearfix">
     Hello world
 <form action="javascript:void(0)">
 <input type="text" id="message">
 <input type="submit">
+</form>
+<form method="post" action="javascript:void(0)" class="sigPad">
+  <ul class="sigNav">
+    <li class="clearButton"><a href="#clear">Clear</a></li>
+  </ul>
+  <div class="sig sigWrapper">
+    <canvas class="pad" width="198" height="55"></canvas>
+    <input type="hidden" name="output" class="output">
+  </div>
+  <button type="submit">I accept the terms of this agreement.</button>
 </form>
 <ul>
 
@@ -34,12 +45,21 @@
 
         // On the server emit and receive a message
         document.forms[0].onsubmit=function(){
-        	console.log('d')
         	socket.emit('message',document.getElementById('message').value)
+        }
+        document.forms[1].onsubmit=function(){
+        	console.log(document.querySelector(".output").value)
+        	socket.emit('image',document.querySelector(".output").value)
         }
         socket.on('message',function(message){
         	document.getElementsByTagName('ul')[0].innerHTML+='<li>'+message+'</li>';
-        })
+        });
+        socket.on('image',function(imageStr){
+        	$('.sigPad').signaturePad().regenerate(imageStr);
+        });
+        $(document).ready(function () {
+		  $('.sigPad').signaturePad({drawOnly:true});
+		});
     </script>
 </body>
 </html>
